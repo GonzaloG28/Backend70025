@@ -22,15 +22,10 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static("public"))
 
 
-//configuramos sessions
-app.use(sessions({
-  secret:"Coder70025",
-  resave:true, saveUninitialized:true
-}))
+
 //inicializamos passport
 initPassport()
 app.use(passport.initialize())
-app.use(passport.session())
 
 
 // Configuración de Handlebars con opciones para permitir el acceso a propiedades heredadas
@@ -39,7 +34,8 @@ app.engine("handlebars", handlebars.engine({
       allowProtoPropertiesByDefault: true,
       allowProtoMethodsByDefault: true,
     }
-})) // inicia el motor de la plantilla
+})) 
+// inicia el motor de la plantilla
 app.set("views", __dirname + "/views") // Indicamos que ruta se encuentran las vistas
 app.set("view engine", "handlebars") // indicamos con que motor vamos a actualizar las vistas
 
