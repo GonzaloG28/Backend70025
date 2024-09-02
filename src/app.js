@@ -6,7 +6,9 @@ import { connectMongoDB } from "./config/mongoDB.config.js"
 import __dirname from "./dirname.js"
 import handlebars from "express-handlebars"
 import envs from "./config/envs.config.js"
-import session from "express-session"
+import sessions from "express-session"
+import { initPassport } from "./config/passport.config.js"
+import passport from "passport"
 
 
 const app = express()
@@ -19,6 +21,16 @@ app.use(express.urlencoded({extended: true}))
 //archivos publicos
 app.use(express.static("public"))
 
+
+//configuramos sessions
+app.use(sessions({
+  secret:"Coder70025",
+  resave:true, saveUninitialized:true
+}))
+//inicializamos passport
+initPassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 
 // Configuración de Handlebars con opciones para permitir el acceso a propiedades heredadas
