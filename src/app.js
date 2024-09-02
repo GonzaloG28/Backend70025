@@ -6,6 +6,7 @@ import { connectMongoDB } from "./config/mongoDB.config.js"
 import __dirname from "./dirname.js"
 import handlebars from "express-handlebars"
 import envs from "./config/envs.config.js"
+import session from "express-session"
 
 
 const app = express()
@@ -15,6 +16,11 @@ connectMongoDB()
 app.use(express.json())
 //sirve para que pueda leer todo tipo de escritura
 app.use(express.urlencoded({extended: true}))
+//archivos publicos
+app.use(express.static("public"))
+
+
+
 // Configuración de Handlebars con opciones para permitir el acceso a propiedades heredadas
 app.engine("handlebars", handlebars.engine({
     runtimeOptions: {
@@ -25,8 +31,6 @@ app.engine("handlebars", handlebars.engine({
 app.set("views", __dirname + "/views") // Indicamos que ruta se encuentran las vistas
 app.set("view engine", "handlebars") // indicamos con que motor vamos a actualizar las vistas
 
-//archivos publicos
-app.use(express.static("public"))
 
 //rutas
 app.use("/api", productRouter) 
