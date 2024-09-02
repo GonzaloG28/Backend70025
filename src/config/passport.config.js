@@ -1,7 +1,8 @@
 import passport from "passport"
 import local from "passport-local"
-import { generarHash } from "../util.js"
+import { generarHash, validaPass } from "../util.js"
 import { UsuariosDao } from "../dao/users.dao.js"
+import { userModel } from "../dao/models/user.model.js"
 
 const usuariosDao = new UsuariosDao()
 
@@ -36,6 +37,38 @@ export const initPassport=() =>{
         )
     )
 
+    //login local
+    passport.use(
+        "login",
+        new local.Strategy(
+            {
+                usernameField:"email"
+            },
+            async(username, password, done)=>{
+                try{
+                    let user = await userModel.getBy({email:username})
+                    if(!user){
+                        console.log("invalid user")
+                        return done(null, false)
+                    }
+
+                    if(!validaPass(password, user.password)){
+                        console.log("invalid password")
+                        return done(null, false)
+                    }
+
+                    delete user.password
+                    return done(null, user)
+                }catch(err){
+                    return done(err)
+                }
+            }
+        )
+    )
+
+
+
+    //solo si usamos sessions
     passport.serializeUser(function(user, done){
         return done(null, user._id)
     })
