@@ -1,6 +1,18 @@
 <h2>Perfil {{usuario.nombre}}</h2>
+{{>menu}}
 <hr>
 <p>Correo electrónico: <strong>{{usuario.email}}</strong></p>
-
+<h2>PRODUCTOS</h2>
+<div class="d-flex mt-5">
+  {{#each products}} 
+    <div class="card m-1" style="width: 18rem;">
+      <div class="card-body">
+        <h3 class="card-title">{{this.title}}</h3>
+        <p class="card-text">{{this.description}}</p>
+        <p class="card-text">${{this.price}}</p>
+        <a href="" class="btn btn-info">Ver más</a>
+      </div>
+    </div>
+  {{/each}}
+</div>
 <br>
-{{>menu}}

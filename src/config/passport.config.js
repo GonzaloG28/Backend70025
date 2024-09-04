@@ -2,9 +2,7 @@ import passport from "passport"
 import local from "passport-local"
 import { generarHash, validaPass } from "../util.js"
 import { UsuariosDao } from "../dao/users.dao.js"
-import { userModel } from "../dao/models/user.model.js"
 
-const usuariosDao = new UsuariosDao()
 
 //configuracion de passport para el registro de usuario
 export const initPassport=() =>{
@@ -17,17 +15,17 @@ export const initPassport=() =>{
             },
             async(req, username, password, done) =>{
                 try{
-                    let { first_name } = req.body
-                    if(!first_name){
+                    let { name } = req.body
+                    if(!name){
                         return done(null, false)
                     }
 
-                    let exist = await usuariosDao.getBy({email: username})
+                    let exist = await UsuariosDao.getBy({email: username})
                     if(exist){
                         return done(null, false)
                     }
 
-                    let newUser = await usuariosDao.create({first_name, email: username, password: generarHash(password)})
+                    let newUser = await UsuariosDao.create({name, email: username, password: generarHash(password)})
                     return done(null, newUser)
 
                 }catch(err){
@@ -46,7 +44,7 @@ export const initPassport=() =>{
             },
             async(username, password, done)=>{
                 try{
-                    let user = await userModel.getBy({email:username})
+                    let user = await UsuariosDao.getBy({email:username})
                     if(!user){
                         console.log("invalid user")
                         return done(null, false)
@@ -74,7 +72,7 @@ export const initPassport=() =>{
     })
 
     passport.deserializeUser(async function (id, done) {
-        let user=await usuariosDao.getBy({_id:id})
+        let user=await UsuariosDao.getBy({_id:id})
         return done(null, user)
     })
 }
