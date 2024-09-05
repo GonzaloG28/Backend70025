@@ -38,7 +38,7 @@ btnSubmit.addEventListener("click", async(e)=>{
 
     let datos=await respuesta.json()
     if(respuesta.status===200){
-        location.href=`/current`
+        location.href=`/api/sessions/current`
     }else{
         alert(datos.error)
     }

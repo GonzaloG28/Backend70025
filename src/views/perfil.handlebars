@@ -1,16 +1,18 @@
-<h2>Perfil {{usuario.nombre}}</h2>
+<h2>Perfil: <strong>{{usuario.first_name}} {{usuario.last_name}}</strong></h2>
+<h3>Age: <strong>{{usuario.age}}</strong></h3>
+<h3>Role: <strong>{{usuario.role}}</strong></h3>
+<h4>Email: <strong>{{usuario.email}}</strong></h4>
+<h4>Cart: <strong>0</strong></h4>
 {{>menu}}
 <hr>
-<p>Correo electrónico: <strong>{{usuario.email}}</strong></p>
-<h2>PRODUCTOS</h2>
+<h2>PRODUCTS</h2>
 <div class="d-flex mt-5">
   {{#each products}} 
-    <div class="card m-1" style="width: 18rem;">
+    <div class="card m-1" style="width: 18rem; border-bottom: 2px solid black">
       <div class="card-body">
         <h3 class="card-title">{{this.title}}</h3>
         <p class="card-text">{{this.description}}</p>
         <p class="card-text">${{this.price}}</p>
-        <a href="" class="btn btn-info">Ver más</a>
       </div>
     </div>
   {{/each}}

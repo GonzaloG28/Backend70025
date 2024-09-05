@@ -11,12 +11,13 @@ export const initPassport=() =>{
         new local.Strategy(
             {
                 usernameField: "email",
-                passReqToCallback: true
+                passReqToCallback: true,
+                session: false
             },
             async(req, username, password, done) =>{
                 try{
-                    let { name } = req.body
-                    if(!name){
+                    let {first_name, last_name, age} = req.body
+                    if(!last_name || !last_name || !age){
                         return done(null, false)
                     }
 
@@ -25,7 +26,14 @@ export const initPassport=() =>{
                         return done(null, false)
                     }
 
-                    let newUser = await UsuariosDao.create({name, email: username, password: generarHash(password)})
+                    let newUser = await UsuariosDao.create(
+                        {
+                            first_name, 
+                            last_name, 
+                            age, 
+                            email: username, 
+                            password: generarHash(password)
+                        })
                     return done(null, newUser)
 
                 }catch(err){
@@ -40,7 +48,8 @@ export const initPassport=() =>{
         "login",
         new local.Strategy(
             {
-                usernameField:"email"
+                usernameField:"email",
+                session: false
             },
             async(username, password, done)=>{
                 try{
@@ -63,16 +72,4 @@ export const initPassport=() =>{
             }
         )
     )
-
-
-
-    //solo si usamos sessions
-    passport.serializeUser(function(user, done){
-        return done(null, user._id)
-    })
-
-    passport.deserializeUser(async function (id, done) {
-        let user=await UsuariosDao.getBy({_id:id})
-        return done(null, user)
-    })
 }

@@ -1,22 +1,28 @@
-const inputNombre=document.getElementById("nombre")
+const inputFirstName=document.getElementById("first_name")
+const inputLastName=document.getElementById("last_name")
+const inputAge=document.getElementById("age")
 const inputEmail=document.getElementById("email")
 const inputPassword=document.getElementById("password")
 const btnSubmit=document.getElementById("btnSubmit")
 
 btnSubmit.addEventListener("click", async(e)=>{
     e.preventDefault()
-    let name=inputNombre.value.trim()
+    let first_name=inputFirstName.value.trim()
+    let last_name=inputLastName.value.trim()
+    let age=inputAge.value.trim()
     let email=inputEmail.value.trim()
     let password=inputPassword.value.trim()
 
-    if(!name || !email || !password){
+    if(!first_name || !last_name || !age || !email || !password){
         alert("Complete los datos...!!!")
         console.log("completa datos")
         return 
     }
 
     let body=JSON.stringify({
-        name, 
+        first_name,
+        last_name,
+        age, 
         email, 
         password
     })
@@ -33,7 +39,7 @@ btnSubmit.addEventListener("click", async(e)=>{
 
     let datos=await respuesta.json()
     if(respuesta.status===201){
-        location.href=`/login?mensaje=Registro correcto para ${email}...!!!`
+        location.href=`/login`
     }else{
         alert(datos.error)
     }
