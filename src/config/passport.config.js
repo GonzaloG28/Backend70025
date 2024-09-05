@@ -1,10 +1,9 @@
 import passport from "passport"
 import local from "passport-local"
 import github from "passport-github2"
-import envs from "./envs.config.js"
 import { generarHash, validaPass } from "../util.js"
 import { UsuariosDao } from "../dao/users.dao.js"
-import { userModel } from "../dao/models/user.model.js"
+
 
 
 //configuracion de passport para el registro de usuario
@@ -82,8 +81,8 @@ passport.use(
     "github",
     new github.Strategy(
         {
-            clientID: envs.CLIENT_ID,
-            clientSecret: envs.CLIENT_SECRET,
+            clientID: "Iv23liqbE5FJi6DjDyWR",
+            clientSecret: "20d456ce7ad0b62ce0d9b356fb16e3a09f9d0016",
             callBackURL:"http://localhost:3000/api/sessions/githubcallback"
         },
         async( accessToken, refreshToken, profile, done)=>{
