@@ -35,6 +35,14 @@ router.post("/login", passport.authenticate("login", {failureRedirect:"/api/sess
     console.log("logueado", token, "req.user:", req.user)
 })
 
+router.get('/github', passport.authenticate("github", {scope: ["user:email"]}),(req,res)=>{})
+
+router.get('/githubcallback', passport.authenticate('github', {failureRedirect:"/api/sessions/error", session: false }), (req, res) => {
+    const token = jwt.sign({ id: req.user._id }, envs.SECRET, { expiresIn: '1h' });
+    res.cookie(envs.SECRET, token, { httpOnly: true });
+    res.redirect('/')
+})
+
 router.get('/current', auth, async (req, res) => {
     try {
         //busca el usuario en la base de datos usando el id almacenado en req.user
