@@ -27,7 +27,7 @@ btnSubmit.addEventListener("click", async(e)=>{
         password
     })
 
-    let respuesta=await fetch("/api/sessions/log", {
+    let respuesta=await fetch("/api/sessions/registro", {
         method:"post",
         headers:{
             "Content-Type":"application/json"

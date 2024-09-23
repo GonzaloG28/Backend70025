@@ -6,18 +6,17 @@ export const userModel = mongoose.model(
     //estructura de los documentos dentro de la colección
     new mongoose.Schema(
         {
-            first_name:String,
-            last_name: String,
-            age:Number,
+            first_name:{type: String},
+            last_name: {type: String},
+            age:{type: Number},
             email:{
                 type: String, 
                 unique:true
             }, 
-            password: String,
+            password: {type: String},
             cart: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'cart',
-                default: null
+                ref: 'carts',
             },
             role: {
                 type: String,

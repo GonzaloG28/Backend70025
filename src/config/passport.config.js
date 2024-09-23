@@ -9,7 +9,7 @@ import { UsuariosDao } from "../dao/users.dao.js"
 //configuracion de passport para el registro de usuario
 export const initPassport=() =>{
     passport.use(
-        "log",
+        "registro",
         new local.Strategy(
             {
                 usernameField: "email",
