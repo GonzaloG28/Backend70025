@@ -1,6 +1,7 @@
 import passport from "passport"
 import local from "passport-local"
 import github from "passport-github2"
+import envs from "./envs.config.js"
 import { generarHash, validaPass } from "../util.js"
 import { UsuariosDao } from "../dao/users.dao.js"
 
@@ -81,14 +82,15 @@ passport.use(
     "github",
     new github.Strategy(
         {
-            clientID: "Iv23liqbE5FJi6DjDyWR",
-            clientSecret: "20d456ce7ad0b62ce0d9b356fb16e3a09f9d0016",
+            clientID: envs.CLIENT_ID,
+            clientSecret: envs.CLIENT_SECRET,
             callBackURL:"http://localhost:3000/api/sessions/githubcallback"
         },
         async( accessToken, refreshToken, profile, done)=>{
             try{
             			
             let user= await UsuariosDao.getBy({email: profile._json.email})
+            console.log(profile._json)
             if(!user){
                 let newUser={
                     first_name: profile._json.name,
