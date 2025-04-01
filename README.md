@@ -22,3 +22,9 @@ DB_NAME=  # Nombre de la base de datos en MongoDB
 APP_ID=  # ID de la aplicación para integración externa
 CLIENT_ID=  # ID del cliente para autenticación con GitHub
 CLIENT_SECRET=  # Clave secreta del cliente de GitHub
+
+```
+## Autor
+
+[GonzaloG28](https://github.com/GonzaloG28)
+
